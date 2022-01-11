@@ -1,0 +1,8 @@
+POST http://localhost:8000/create HTTP/1.1
+content-type: application/json
+
+{
+    "title": "third task!",
+    "body": "created using golang API",
+    "deadline": "2022-03-21 06:46:54.668654"
+}
