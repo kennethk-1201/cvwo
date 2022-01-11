@@ -1,1 +1,7 @@
-PUT http://localhost:8000/update/1 HTTP/1.1
+PUT http://localhost:8000/update/4 HTTP/1.1
+
+{
+    "title": "fourth task!",
+    "body": "cqewqereated usinqweg golang API",
+    "deadline": "2029-03-30 09:46:54.668654"
+}

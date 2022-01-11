@@ -20,18 +20,9 @@ type Task struct {
 	Deadline string `json:"deadline"`
 }
 
-// JsonResponse (Model)
-type JsonResponse struct {
-    Type    string `json:"type"`
-    DataList    []Task `json:"datalist"`
-    Data    Task `json:"data"`
-    Message string `json:"message"`
-}
-
 // get all tasks
 func GetTasks(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Context-Type", "application/x-www-form-urlencoded")
-	w.Header().Set("Access-Control-Allow-Methods", "GET")
 
 	db := helper.SetupDB()
 	defer db.Close()
@@ -58,7 +49,15 @@ func GetTasks(w http.ResponseWriter, r *http.Request) {
         tasks = append(tasks, Task{ID: id, Title: title, Body: body, Deadline: deadline})
     }
 
-    var response = JsonResponse{Type: "success", DataList: tasks}
+    response := struct {
+		Type string `json:"type"`
+		Data []Task `json:"data"`
+		Message string `json:"message"`
+	}{
+		Type: "success",
+		Data: tasks,
+		Message: "Returned tasks!",
+	}
 
     json.NewEncoder(w).Encode(response)
 }
@@ -66,7 +65,6 @@ func GetTasks(w http.ResponseWriter, r *http.Request) {
 // get specific task
 func GetTask(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Context-Type", "application/x-www-form-urlencoded")
-	w.Header().Set("Access-Control-Allow-Methods", "GET")
 
 	db := helper.SetupDB()
 	defer db.Close()
@@ -89,7 +87,15 @@ func GetTask(w http.ResponseWriter, r *http.Request) {
 	// Check errors
 	helper.CheckErr(err)
 
-    var response = JsonResponse{Type: "success", Data: Task{ID: taskId, Title: title, Body: body, Deadline: deadline}}
+    response := struct {
+		Type string `json:"type"`
+		Data Task `json:"data"`
+		Message string `json:"message"`
+	}{
+		Type: "success",
+		Data: Task{ID: taskId, Title: title, Body: body, Deadline: deadline},
+		Message: "Returned task!",
+	}
 
     json.NewEncoder(w).Encode(response)
 }
@@ -97,10 +103,10 @@ func GetTask(w http.ResponseWriter, r *http.Request) {
 // create task
 func CreateTask(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Context-Type", "application/x-www-form-urlencoded")
-	w.Header().Set("Access-Control-Allow-Methods", "POST")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	
 	var task Task
+
 	err1 := json.NewDecoder(r.Body).Decode(&task)
 	helper.CheckErr(err1)
 
@@ -114,26 +120,68 @@ func CreateTask(w http.ResponseWriter, r *http.Request) {
 
     // execute the sql statement
     // Scan function will save the insert id in the id
-    err2 := db.QueryRow(sqlStatement, task.Title, task.Body, task.Deadline).Scan(&id)
+    err2 := db.QueryRow(sqlStatement, task.Title, task.Body, task.Deadline).Scan(&task.ID)
 	helper.CheckErr(err2)
 
 	fmt.Printf("Created new task with id %v", id)
 
 	response := struct {
-		Type string
-		TaskID int64
+		Type string `json:"type"`
+		Data Task `json:"data"`
+		Message string `json:"message"`
 	}{
 		Type: "success",
-		TaskID: id,
+		Data: task,
+		Message: "Created a task!",
 	}
 
     json.NewEncoder(w).Encode(response)
 }
 
+func (t *Task) modifyTaskID(i int) {
+	t.ID = i
+}
 // update task
 func UpdateTask(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Context-Type", "application/x-www-form-urlencoded")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+
+	var task Task
+	
+	err1 := json.NewDecoder(r.Body).Decode(&task)
+	helper.CheckErr(err1)
+
 	db := helper.SetupDB()
 	defer db.Close()
+
+	params := mux.Vars(r)
+
+	fmt.Println("Getting task...")
+
+	sqlStatement := `UPDATE tasks SET title=$2, body=$3, deadline=$4 WHERE id=$1`
+
+	// convert the id type from string to int
+	id, err2 := strconv.Atoi(params["id"])
+	helper.CheckErr(err2)
+
+	_, err3 := db.Exec(sqlStatement, id, task.Title, task.Body, task.Deadline)
+	helper.CheckErr(err3)
+
+	fmt.Printf("Updated task with id %v", id)
+
+	task.modifyTaskID(id)
+
+	response := struct {
+		Type string `json:"type"`
+		Data Task `json:"data"`
+		Message string `json:"message"`
+	}{
+		Type: "success",
+		Data: task,
+		Message: "Updated a task!",
+	}
+
+    json.NewEncoder(w).Encode(response)
 }
 
 // delete task
