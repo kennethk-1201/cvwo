@@ -6,6 +6,8 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"encoding/json"
+
 
 	_ "github.com/lib/pq"
 
@@ -70,9 +72,31 @@ func main() {
 func getTasks(w http.ResponseWriter, r *http.Request) {
 	db := setupDB()
 
-	printMessage("Getting tasks...")
+	fmt.Println("Getting tasks...")
 
-	rows, err := db.Query("SELECT * FROM movies")
+	rows, err := db.Query("SELECT * FROM tasks")
+
+	checkErr(err)
+
+	var tasks []Task
+
+	for rows.Next() {
+        var id int
+        var title string
+        var body string
+        var deadline string
+
+        err = rows.Scan(&id, &title, &body, &deadline)
+
+        // check errors
+        checkErr(err)
+
+        tasks = append(tasks, Task{ID: id, Title: title, Body: body, Deadline: deadline})
+    }
+
+    var response = JsonResponse{Type: "success", Data: tasks}
+
+    json.NewEncoder(w).Encode(response)
 }
 
 // get specific task
