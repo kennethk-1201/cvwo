@@ -1,1 +1,1 @@
-DELETE http://localhost:8000/delete/1 HTTP/1.1
+DELETE http://localhost:8000/delete/6 HTTP/1.1

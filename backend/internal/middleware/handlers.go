@@ -141,6 +141,7 @@ func CreateTask(w http.ResponseWriter, r *http.Request) {
 func (t *Task) modifyTaskID(i int) {
 	t.ID = i
 }
+
 // update task
 func UpdateTask(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Context-Type", "application/x-www-form-urlencoded")
@@ -186,6 +187,39 @@ func UpdateTask(w http.ResponseWriter, r *http.Request) {
 
 // delete task
 func DeleteTask(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Context-Type", "application/x-www-form-urlencoded")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	db := helper.SetupDB()
 	defer db.Close()
+
+	// get the userid from the request params, key is "id"
+    params := mux.Vars(r)
+
+    // convert the id in string to int
+    id, err1 := strconv.Atoi(params["id"])
+
+    helper.CheckErr(err1)
+
+	sqlStatement := `DELETE FROM tasks WHERE id=$1`
+
+	// execute the sql statement
+    _, err2 := db.Exec(sqlStatement, id)
+
+	helper.CheckErr(err2)
+
+	fmt.Printf("Deleted task with id %v", id)
+
+	// format the reponse message
+    response := struct {
+        Type string `json:"type"`
+        ID int `json:"id"`
+		Message string `json:"message"`
+    }{
+		Type: "success",
+		ID: id,
+		Message: "Deleted a task!",
+	}
+
+    // send the response
+    json.NewEncoder(w).Encode(response)
 }
