@@ -2,9 +2,16 @@ package helper
 
 import (
 	"log"
-
+	"database/sql"
+	"os"
 	"github.com/spf13/viper"
 )
+
+func CheckErr(err error) {
+	if err != nil {
+        log.Fatalf("Error opening database: %q", err)
+	}
+} 
 
 // use viper package to read .env file
 // return the value of the key
@@ -35,4 +42,13 @@ func GetEnvVariable(key string) string {
 	}
 
 	return value
+}
+
+func SetupDB() *sql.DB {
+	os.Setenv("DATABASE_URL", "postgres://rbsgtjevpzvhyr:dfde88c49176d084a4c0000cb74d0c2f762f09806e39bafea80d26d5b5032335@ec2-34-249-49-9.eu-west-1.compute.amazonaws.com:5432/d8hae478lmhvj0")
+	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
+
+	CheckErr(err)
+
+    return db
 }
