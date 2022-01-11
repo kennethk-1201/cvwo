@@ -23,7 +23,6 @@ type Task struct {
 // get all tasks
 func GetTasks(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Context-Type", "application/x-www-form-urlencoded")
-
 	db := helper.SetupDB()
 	defer db.Close()
 
