@@ -1,9 +1,13 @@
 package main
 
 import (
+	"database/sql"
 	"fmt"
 	"log"
 	"net/http"
+	"os"
+
+	_ "github.com/lib/pq"
 
 	"github.com/gorilla/mux"
 	"github.com/kennethk-1201/cvwo/backend/internal/helper"
@@ -15,10 +19,32 @@ import (
 
 // Task Struct (Model)
 type Task struct {
-	ID      string `json:"id"`
-	Isbn    string `json:"isbn"`
+	ID      int `json:"id"`
 	Title   string `json:"title"`
-	Content string `json:"content"`
+	Body string `json:"body"`
+	Deadline string `json:"deadline"`
+}
+
+type JsonResponse struct {
+    Type    string `json:"type"`
+    Data    []Task `json:"data"`
+    Message string `json:"message"`
+}
+
+func checkErr(err error) {
+	if err != nil {
+        log.Fatalf("Error opening database: %q", err)
+	}
+} 
+
+
+func setupDB() *sql.DB {
+	os.Setenv("DATABASE_URL", "postgres://rbsgtjevpzvhyr:dfde88c49176d084a4c0000cb74d0c2f762f09806e39bafea80d26d5b5032335@ec2-34-249-49-9.eu-west-1.compute.amazonaws.com:5432/d8hae478lmhvj0")
+	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
+
+	checkErr(err)
+
+    return db
 }
 
 func main() {
@@ -42,7 +68,11 @@ func main() {
 
 // get all tasks
 func getTasks(w http.ResponseWriter, r *http.Request) {
+	db := setupDB()
 
+	printMessage("Getting tasks...")
+
+	rows, err := db.Query("SELECT * FROM movies")
 }
 
 // get specific task
