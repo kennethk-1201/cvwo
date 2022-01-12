@@ -1,13 +1,11 @@
 .footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
   width: 100%;
   color: black;
   text-align: center;
   -ms-flex-negative: 0;
       flex-shrink: 0;
-  padding-bottom: 2em;
+  padding: 2em 0;
+  background-color: white;
 }
 
 .header {
@@ -27,8 +25,32 @@
 }
 
 .task-container {
+  width: 100%;
   border: 1px black solid;
   border-radius: 1em;
+  padding: 1em;
+}
+
+.icon-row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: end;
+}
+
+.edit-icon {
+  cursor: pointer;
+  margin-right: 0.5em;
+}
+
+.done-icon {
+  cursor: pointer;
+}
+
+.tasklist-container {
+  width: 50%;
 }
 
 .loader-holder {

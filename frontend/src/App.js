@@ -28,7 +28,7 @@ function App() {
     return (
         <div className="container">
             <Header/>
-            {loading ? <Loader/> : <TaskContainer tasks={tasks}/>}
+            {loading ? <Loader/> : <TaskContainer tasks={tasks} setTasks={setTasks}/>}
             <Footer/>
         </div>
     );

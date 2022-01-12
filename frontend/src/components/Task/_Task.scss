@@ -1,4 +1,20 @@
 .task-container{
+    width: 100%;
     border: 1px black solid;
     border-radius: 1em;
+    padding: 1em;
+}
+
+.icon-row{
+    display: flex;
+    justify-content: end;
+}
+
+.edit-icon{
+    cursor: pointer;
+    margin-right: 0.5em;
+}
+
+.done-icon{
+    cursor: pointer;
 }
