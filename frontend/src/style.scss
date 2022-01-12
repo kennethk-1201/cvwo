@@ -3,6 +3,7 @@
 @import "components/Header/Header";
 @import "components/Task/Task";
 @import "components/TaskContainer/TaskContainer";
+@import "components/Loader/Loader";
 
 html {
 }
@@ -33,5 +34,19 @@ img {
     max-width: 1000px;
     display: flex;
     flex-direction: column;
+    height: 100vh;
     align-items: center;
+}
+
+.fade-in {
+    animation: fadeIn 1s;
+    -webkit-animation: fadeIn 1s;
+    -moz-animation: fadeIn 1s;
+    -o-animation: fadeIn 1s;
+    -ms-animation: fadeIn 1s;
+}
+
+@keyframes fadeIn {
+    from {opacity:0;}
+    to {opacity:1;}
 }

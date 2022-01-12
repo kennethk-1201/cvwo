@@ -1,6 +1,10 @@
 .header {
     display: flex;
     width: 100%;
+    flex-shrink: 0;
     justify-content: center;
-    text-align: center;
+    background-color: aquamarine;
+    padding: 0.75em 0;
+    font-size: 2rem;
+    margin-bottom: 1em;
 }

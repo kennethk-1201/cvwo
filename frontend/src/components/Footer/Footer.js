@@ -1,7 +1,7 @@
 const Footer = props => {
     return (
         <div className="footer">
-            Created by Kenneth Kiang
+            Created by Kenneth Kiang.
         </div>
     )
 }
