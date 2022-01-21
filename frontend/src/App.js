@@ -4,31 +4,47 @@ import Axios from "axios";
 
 import {
     Loader,
-    CreateTask,
     Footer,
     Header,
-    TaskContainer
+    TaskContainer,
+    ModalForm,
+    Error
 } from "./components";
+
+import {
+    sortTasks
+} from "./helpers";
 
 function App() {
 
     const [tasks, setTasks] = useState([])
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
 
     useEffect(() => {
         const getTasks = async () => {
-            const res = await Axios.get(`${process.env.REACT_APP_BACKEND_API}/read`)
-            console.log(res);
-            setTasks(res.data.data)
-            setLoading(false);
+            try {
+                const res = await Axios.get(`${process.env.REACT_APP_BACKEND_API}/read`)
+                console.log(res);
+                setTasks(sortTasks(res.data.data));
+                setLoading(false);
+            } catch (err) {
+                setError(true);
+                setLoading(false);
+            }
         }
         setTimeout(getTasks, 0);
     }, [])
 
     return (
-        <div className="container">
+        <div className="container fade-in">
             <Header/>
-            {loading ? <Loader/> : <TaskContainer tasks={tasks} setTasks={setTasks}/>}
+            <ModalForm tasks={tasks} setTasks={setTasks} setLoading={setLoading}/>
+            {loading 
+                ? <Loader/> 
+                : error 
+                    ? <Error/>
+                    : <TaskContainer tasks={tasks} setTasks={setTasks}/>}
             <Footer/>
         </div>
     );
