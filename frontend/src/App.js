@@ -44,7 +44,7 @@ function App() {
                 ? <Loader/> 
                 : error 
                     ? <Error/>
-                    : <TaskContainer tasks={tasks} setTasks={setTasks}/>}
+                    : <TaskContainer tasks={tasks} setTasks={setTasks} setLoading={setLoading}/>}
             <Footer/>
         </div>
     );

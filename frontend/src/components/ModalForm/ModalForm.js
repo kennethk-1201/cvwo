@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Axios from "axios";
 
+import CloseIcon from '@mui/icons-material/Close';
 import { sortTasks } from "../../helpers";
 
 const ModalForm = props => {
@@ -50,6 +51,9 @@ const ModalForm = props => {
                 
             </div>
             <form className="modal-container" onSubmit={submitHandler}>
+                <div className="close-icon-holder">
+                    <CloseIcon onClick={closeModal}/>
+                </div>
                 <input className="modal-form-title" type="text" value={title} onChange={e => changeHandler(e, setTitle)}  placeholder="Task title"/>
                 <input className="modal-form-body" type="text" value={description} onChange={e => changeHandler(e, setDescription)} placeholder="Description"/>
                 <input className="modal-form-deadline" type="datetime-local" value={deadline} onChange={e => changeHandler(e, setDeadline)} placeholder="Task title"/>

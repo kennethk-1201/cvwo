@@ -7,18 +7,22 @@ import { formatTime } from "../../helpers";
 
 const Task = props => {
 
-    const { task, tasks, setTasks } = props;
+    const { task, tasks, setTasks, setLoading } = props;
 
     const deleteTask = async e => {
         
-        console.log(task.id)
+        console.log("Deleted task with id " + task.id)
         
-        // update frontend
-        setTasks([...tasks].filter(t => t.id !== task.id))
+        setLoading(true);
 
         const res = await Axios.delete(`${process.env.REACT_APP_BACKEND_API}/delete/${task.id}`, {
             headers: {}, data: {}
         })
+
+        // update frontend
+        setTasks([...tasks].filter(t => t.id !== task.id))
+
+        setLoading(false);
     }
 
     return (

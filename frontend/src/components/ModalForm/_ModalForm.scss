@@ -69,6 +69,25 @@
     text-align: right;
 }
 
-.modal-form-button:hover{
+.modal-form-button:hover {
     cursor:pointer;
+}
+
+.close-icon-holder {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    right: 1.5em;
+    z-index: 101;
+}
+
+.close-icon-holder > *:hover{
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 680px) {
+    .modal-container{
+        width: 75%;
+    }
 }

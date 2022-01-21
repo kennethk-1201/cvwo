@@ -29,3 +29,9 @@
         cursor: pointer;
     }
 }
+
+@media only screen and (max-width: 680px) {
+    .task-container{
+        width: 75%;
+    }
+}

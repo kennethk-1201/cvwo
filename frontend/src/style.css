@@ -68,6 +68,12 @@
   cursor: pointer;
 }
 
+@media only screen and (max-width: 680px) {
+  .task-container {
+    width: 75%;
+  }
+}
+
 ::-webkit-scrollbar {
   opacity: 0;
   width: 0.5rem;
@@ -95,7 +101,7 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  overflow-y: scroll;
+  overflow-y: overlay;
 }
 
 .tasks-holder {
@@ -352,6 +358,29 @@
   cursor: pointer;
 }
 
+.close-icon-holder {
+  position: absolute;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  right: 1.5em;
+  z-index: 101;
+}
+
+.close-icon-holder > *:hover {
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 680px) {
+  .modal-container {
+    width: 75%;
+  }
+}
+
 .add-button-container {
   width: 100%;
   display: -webkit-box;
@@ -367,7 +396,7 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  padding-bottom: 1em;
+  padding-bottom: 2em;
 }
 
 .add-button {
@@ -396,6 +425,12 @@
   -webkit-transition: 0.15s;
   transition: 0.15s;
   cursor: pointer;
+}
+
+@media only screen and (max-width: 680px) {
+  .add-button {
+    width: 75%;
+  }
 }
 
 .error-container {
