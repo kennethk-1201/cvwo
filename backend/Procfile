@@ -1,1 +1,1 @@
-web: backend/cmd/cvwo_backend
+web: cmd/cvwo_backend
