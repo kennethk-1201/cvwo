@@ -1,0 +1,18 @@
+timeline:
+- begun with a hosted postgreSQL db from the start
+- golang was tough, very unfamiliar with different project structures from js
+- solidified API so that i can shift my focus to the frontend later on
+- frontend was quite smooth, faced minor issues but was overall quite fun
+- kept design simple to facilitate responsive design
+- considered redux due to massive copy and pasting at times, but the boilerplate needed outweighed the benefits
+- weird cors issue when handling locally (could not run on mobile despite my computer and phone sharing hotspot)
+- many deployment issues, faced outdated dependencies in golang
+- did not realise the need for buildpacks, and my weird project structure meant heroku couldn't track my main.go so i had to get 
+    another build pack as i didnt want to recreate a whole new repo
+- mistakenly used binary compiled in local computer to be run on heroku, which led to errors (due to mismatch in the architecture)
+- considered using docker containers due to the convenience, but might have to deal with a whole set of other issues when working 
+    with containers (due to lack of experience)
+- ended up using bash in the heroku dyno to figure out that there was a binary compiled for me already
+- heroku had dynamic port numbers which wasted a lot of time
+- however, logging and heroku's pipeline helped ease the debugging process a lot
+- overall worked out, was manageable

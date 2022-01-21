@@ -1,4 +1,0 @@
-set up create form for task
-set up update form for task
-style main structure and maybe add pagination
-done!
