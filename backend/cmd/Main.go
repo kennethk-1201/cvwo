@@ -13,7 +13,7 @@ func main() {
 	r := router.Router()
 
 	c := cors.New(cors.Options{
-        AllowedOrigins: []string{"http://localhost:3000"},
+        AllowedOrigins: []string{"xd","http://localhost:3000", "http://192.168.43.158", "http://192.168.43.158:3000", "https://cvwo-kenneth.netlify.app"},
         AllowCredentials: true,
 		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE"},
     })
