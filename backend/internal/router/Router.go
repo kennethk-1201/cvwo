@@ -18,7 +18,6 @@ func Router() *mux.Router{
 	// .env - It will search for the .env file in the current directory
 	// Route middleware / Endpoints
 	r.HandleFunc("/read", middleware.GetTasks).Methods("GET")
-	r.HandleFunc("/read/{id}", middleware.GetTask).Methods("GET")
 	r.HandleFunc("/create", middleware.CreateTask).Methods("POST")
 	r.HandleFunc("/update/{id}", middleware.UpdateTask).Methods("PUT")
 	r.HandleFunc("/delete/{id}", middleware.DeleteTask).Methods("DELETE")

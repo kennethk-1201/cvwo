@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import Axios from "axios";
 
 import CloseIcon from '@mui/icons-material/Close';
@@ -6,14 +6,23 @@ import { sortTasks } from "../../helpers";
 
 const ModalForm = props => {
     
-    const {tasks, setTasks, setLoading} = props
-
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-    const [deadline, setDeadline] = useState("");
+    const {
+        tasks, 
+        setTasks, 
+        setLoading,
+        currentId,
+        setCurrentId,
+        title,
+        setTitle,
+        description,
+        setDescription,
+        deadline,
+        setDeadline
+    } = props
 
     const closeModal = e => {
         window.document.getElementById("modal").classList.add("d-none");
+        setCurrentId(-1);
     }
     
     const submitHandler = async e => {
@@ -21,19 +30,34 @@ const ModalForm = props => {
         try {
             closeModal();
 
-            // POST request
             setLoading(true);
-            const res = await Axios.post(
-                `${process.env.REACT_APP_BACKEND_API}/create`,
-                {
-                    title,
-                    body: description,
-                    deadline
-                }
-            )
+            
+            if (currentId === -1){
+                // if currentId does not exist, send POST to create task
+                const res = await Axios.post(
+                    `${process.env.REACT_APP_BACKEND_API}/create`,
+                    {
+                        title,
+                        body: description,
+                        deadline
+                    }
+                )
+                // update frontend
+                setTasks(sortTasks([res.data.data, ...tasks]));
+            } else {
+                // else, send PUT to update task
+                const res = await Axios.put(
+                    `${process.env.REACT_APP_BACKEND_API}/update/${currentId}`,
+                    {
+                        title,
+                        body: description,
+                        deadline
+                    }
+                )
+                // update frontend
+                setTasks(sortTasks([res.data.data, ...tasks.filter(t => t.id !== currentId)]));
+            }
 
-            // update frontend
-            setTasks(sortTasks([res.data.data, ...tasks]));
             setLoading(false);
             
         } catch (err) {

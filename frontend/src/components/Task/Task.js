@@ -7,12 +7,19 @@ import { formatTime } from "../../helpers";
 
 const Task = props => {
 
-    const { task, tasks, setTasks, setLoading } = props;
+    const { 
+        task, 
+        tasks, 
+        setTasks, 
+        setTitle,
+        setDescription,
+        setDeadline,
+        setCurrentId,
+        setLoading 
+    } = props;
 
     const deleteTask = async e => {
-        
-        console.log("Deleted task with id " + task.id)
-        
+                
         setLoading(true);
 
         const res = await Axios.delete(`${process.env.REACT_APP_BACKEND_API}/delete/${task.id}`, {
@@ -20,9 +27,17 @@ const Task = props => {
         })
 
         // update frontend
-        setTasks([...tasks].filter(t => t.id !== task.id))
+        setTasks(tasks.filter(t => t.id !== task.id))
 
         setLoading(false);
+    }
+
+    const openModal = e => {
+        setCurrentId(task.id);
+        setTitle(task.title);
+        setDescription(task.body);
+        setDeadline(task.deadline.slice(0,16));
+        window.document.getElementById("modal").classList.remove("d-none");
     }
 
     return (
@@ -32,7 +47,7 @@ const Task = props => {
             <div className="task-bottom-row">
                 <p className="task-deadline">{formatTime(task.deadline)}</p>
                 <div className="icon-row">
-                    <EditIcon color="black" className="edit-icon"/>
+                    <EditIcon color="black" className="edit-icon" onClick={openModal}/>
                     <DoneIcon color="black" className="done-icon" onClick={deleteTask}/>
                 </div>
             </div>
