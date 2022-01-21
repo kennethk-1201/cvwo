@@ -1,6 +1,7 @@
 package main
 
 import (
+	"os"
 	"fmt"
 	"log"
 	"net/http"
@@ -19,5 +20,7 @@ func main() {
     })
 
 	fmt.Println("Starting server on the port 8000...")
-	log.Fatal(http.ListenAndServe(":8000", c.Handler(r)))
+	port := os.Getenv("PORT")
+
+	log.Fatal(http.ListenAndServe(":" + port, c.Handler(r)))
 }
