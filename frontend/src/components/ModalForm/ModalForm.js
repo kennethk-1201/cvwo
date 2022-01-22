@@ -34,7 +34,7 @@ const ModalForm = props => {
         e.preventDefault();
         try {
             // if invalid, do not send request
-            if (title == "" || description == "" || deadline == "") {
+            if (title == "" || description == "" || deadline == "" || title.length > 100 || description.length > 500) {
                 return;
             }
             closeModal();
