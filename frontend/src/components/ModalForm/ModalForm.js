@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Axios from "axios";
 
 import CloseIcon from '@mui/icons-material/Close';
@@ -32,6 +33,10 @@ const ModalForm = props => {
     const submitHandler = async e => {
         e.preventDefault();
         try {
+            // if invalid, do not send request
+            if (title == "" || description == "" || deadline == "") {
+                return;
+            }
             closeModal();
 
             setLoading(true);
