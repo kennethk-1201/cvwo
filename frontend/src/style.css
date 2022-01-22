@@ -311,8 +311,6 @@
   border: none;
   -webkit-margin-before: 1em;
           margin-block-start: 1em;
-  -webkit-margin-after: 1em;
-          margin-block-end: 1em;
   -webkit-margin-start: 0px;
           margin-inline-start: 0px;
   -webkit-margin-end: 0px;
@@ -330,10 +328,12 @@
 
 .modal-form-body {
   font-size: 1em;
+  margin-bottom: 1em;
 }
 
 .modal-form-deadline {
   font-size: 1em;
+  border: none;
 }
 
 .modal-form-button-holder {

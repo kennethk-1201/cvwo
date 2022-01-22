@@ -14,7 +14,6 @@ func CheckErr(err error) {
 
 func SetupDB() *sql.DB {
 	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
-
 	CheckErr(err)
 
     return db

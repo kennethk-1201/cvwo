@@ -18,11 +18,17 @@ const Task = props => {
         setLoading 
     } = props;
 
+    // set current time to compare to
+    const today = new Date();
+    var date = today.getFullYear()+'-'+ (today.getMonth()+1 <= 9 ? "0" : "") +(today.getMonth()+1)+'-'+today.getDate();
+    var time = today.getHours() + ":" + today.getMinutes()+":00";
+    var dateTime = date+'T'+time+"Z";
+
     const deleteTask = async e => {
                 
         setLoading(true);
 
-        const res = await Axios.delete(`${process.env.REACT_APP_BACKEND_API}/delete/${task.id}`, {
+        await Axios.delete(`${process.env.REACT_APP_BACKEND_API}/delete/${task.id}`, {
             headers: {}, data: {}
         })
 
@@ -45,7 +51,7 @@ const Task = props => {
             <h3 className="task-title">{task.title}</h3>
             <p className="task-body">{task.body}</p>
             <div className="task-bottom-row">
-                <p className="task-deadline">{formatTime(task.deadline)}</p>
+                <p className="task-deadline" style={{color: dateTime >= task.deadline ? "red" : "black"}}>{formatTime(task.deadline)}</p>
                 <div className="icon-row">
                     <EditIcon color="black" className="edit-icon" onClick={openModal}/>
                     <DoneIcon color="black" className="done-icon" onClick={deleteTask}/>

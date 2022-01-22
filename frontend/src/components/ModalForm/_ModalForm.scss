@@ -33,7 +33,6 @@
 .modal-container > input {
     border: none;
     margin-block-start: 1em;
-    margin-block-end: 1em;
     margin-inline-start: 0px;
     margin-inline-end: 0px;
 }
@@ -49,10 +48,12 @@
 
 .modal-form-body {
     font-size: 1em;
+    margin-bottom: 1em;
 }
 
 .modal-form-deadline {
     font-size: 1em;
+    border: none;
 }
 
 .modal-form-button-holder {

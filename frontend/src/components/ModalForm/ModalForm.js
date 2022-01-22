@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import Axios from "axios";
 
 import CloseIcon from '@mui/icons-material/Close';
@@ -22,7 +21,12 @@ const ModalForm = props => {
 
     const closeModal = e => {
         window.document.getElementById("modal").classList.add("d-none");
+
+        // clear form state
         setCurrentId(-1);
+        setTitle("");
+        setDescription("");
+        setDeadline("");
     }
     
     const submitHandler = async e => {
@@ -80,7 +84,9 @@ const ModalForm = props => {
                 </div>
                 <input className="modal-form-title" type="text" value={title} onChange={e => changeHandler(e, setTitle)}  placeholder="Task title"/>
                 <input className="modal-form-body" type="text" value={description} onChange={e => changeHandler(e, setDescription)} placeholder="Description"/>
+                <div>
                 <input className="modal-form-deadline" type="datetime-local" value={deadline} onChange={e => changeHandler(e, setDeadline)} placeholder="Task title"/>
+                </div>
                 <div className="modal-form-button-holder">
                     <button className="modal-form-button" type="submit">Save</button>
                 </div>
