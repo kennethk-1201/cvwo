@@ -1,3 +1,2 @@
 # CVWO
-NAME: KIANG JIA MING KENNETH <br />
-MATRICULATION NUMBER: A0234768R
+A Todo list application made with React, Golang and PostgreSQL.
